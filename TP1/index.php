@@ -11,23 +11,22 @@ $badgesRegex = "/[0-9]{1}+[0]?/";
 $degreeRegex = "/[1-4]{1}/";
 // VARIABLES
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $lastName = $_POST['lastname'];
-    $firstName = $_POST['firstname'];
-    $birthDate = $_POST['birthdate'];
-    $nationality = $_POST['nationality'];
-    $adress = $_POST['adress'];
-    $email = $_POST['email'];
-    $phoneNumber = $_POST['phonenumber'];
-    $degree = $_POST['degree'];
-    $poleEmploi = $_POST['poleemploinumber'];
-    $badges = $_POST['badgeamount'];
-    $codecademyLinks = $_POST['links'];
-    $superhero = $_POST['superheroes'];
-    $hack = $_POST['hack'];
-    $experience = $_POST['previousexperience'];
+    $lastName = $_POST["lastname"];
+    $firstName = $_POST["firstname"];
+    $birthDate = $_POST["birthdate"];
+    $nationality = $_POST["nationality"];
+    $adress = $_POST["adress"];
+    $email = $_POST["email"];
+    $filtermail = filter_var($email, FILTER_VALIDATE_EMAIL);
+    $phoneNumber = $_POST["phonenumber"];
+    $degree = $_POST["degree"];
+    $poleEmploi = $_POST["poleemploinumber"];
+    $badges = $_POST["badgeamount"];
+    $codecademyLinks = $_POST["links"];
+    $superhero = $_POST["superheroes"];
+    $hack = $_POST["hack"];
+    $experience = $_POST["previousexperience"];
 }
-
-var_dump($_POST);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -43,7 +42,7 @@ var_dump($_POST);
 <body>
 
     <h1>Exercice 1 Partie 10</h1>
-    <p>Faire une page pour enregistrer un futur apprenant. On devra pouvoir saisir les informations suivantes :
+    <p class="exercice">Faire une page pour enregistrer un futur apprenant. On devra pouvoir saisir les informations suivantes :
 
         Nom
         Prénom
@@ -66,7 +65,7 @@ var_dump($_POST);
 
 
     <?php
-    if (isset($_POST['lastname']) && preg_match($lastNameRegex, $lastName) && preg_match($firstNameRegex, $firstName) &&  preg_match($dateRegex, $birthDate) && preg_match($lastNameRegex, $nationality) && preg_match($addressRegex, $adress) && preg_match($mailRegex, $email) && preg_match($phoneRegex, $phoneNumber) && preg_match($degreeRegex, $degree) && preg_match($poleEmploiRegex, $poleEmploi) && preg_match($badgesRegex, $badges) && preg_match($urlRegex, $codecademyLinks)) {
+    if (isset($_POST['lastname']) && preg_match($lastNameRegex, $lastName) && preg_match($firstNameRegex, $firstName) &&  preg_match($dateRegex, $birthDate) && preg_match($lastNameRegex, $nationality) && preg_match($addressRegex, $adress) && ($filtermail == true) && preg_match($phoneRegex, $phoneNumber) && preg_match($degreeRegex, $degree) && preg_match($poleEmploiRegex, $poleEmploi) && preg_match($badgesRegex, $badges) && preg_match($urlRegex, $codecademyLinks)) {
     ?>
         <p><?= "Votre nom : " . $lastName ?></p>
         <p><?= "Votre prénom : " . $firstName ?></p>
@@ -85,7 +84,7 @@ var_dump($_POST);
     <?php } else {
         ?>
         <div class="container">
-        <div class="form-group">
+        <div class="form-group rounded pl-2">
             <form method="post" action="index.php" novalidate>
                 <!-- NOM -->
                 <div class="textfields">
@@ -114,7 +113,7 @@ var_dump($_POST);
                 </div>
                 <!-- EMAIL -->
                 <div class="mailfields">
-                    <label for="email">E-mail : </label><span class="errormessage"><?= isset($_POST['email']) ? (empty($_POST['email']) ? 'Veuillez remplir ce champ' : (preg_match($mailRegex, $email) == false ?  "Veuillez indiquer une adresse email correcte" : "")) : "" ?></span>
+                    <label for="email">E-mail : </label><span class="errormessage"><?= isset($_POST['email']) ? (empty($_POST['email']) ? 'Veuillez remplir ce champ' : $filtermail == false ?  "Veuillez indiquer une adresse email correcte" : "") : "" ?></span>
                     <input type="email" name="email" id="email" value="<?= isset($_POST['email']) ? $_POST['email'] : '' ?>" required>
                 </div>
                 <!-- TELEPHONE -->
@@ -165,7 +164,7 @@ var_dump($_POST);
                         l"informatique avant de remplir ce formulaire ?</label><span class="errormessage"><?= isset($_POST['previousexperience']) ? (empty($_POST['previousexperience']) ? 'Veuillez remplir ce champ' : "") : "" ; ?></span>
                     <textarea id="previousexperience" name="previousexperience" rows="1" cols="15" placeholder="Insérer votre expérience" required><?= isset($_POST['previousexperience']) ? $_POST['previousexperience'] : '' ?></textarea>
                 </div>
-                <input type="submit" value="Afficher les valeurs">
+                <input type="submit" value="Afficher les valeurs" class="button">
         </div>
     </div>
     <?php
