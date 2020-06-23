@@ -78,11 +78,11 @@ A la validation, les données saisies devront aparaitre sous le formulaire. Atte
     <?php
     if (isset($lastName) && preg_match($lastNameRegex, $lastName) && preg_match($firstNameRegex, $firstName) && preg_match($ageRegex, $age) && preg_match($genderRegex, $gender) && preg_match($societyRegex, $society)){
     ?>
-        <p><?= "Votre nom : " . $lastName ?></p>
-        <p><?= "Votre prénom : " . $firstName ?></p>
-        <p><?= "Votre civilité : " . $gender ?></p>
-        <p><?= "Votre âge : " . $age ?></p>
-        <p><?= "Votre société: " . $society ?></p>
+        <p><?= "Votre nom : " . htmlspecialchars($lastName) ?></p>
+        <p><?= "Votre prénom : " . htmlspecialchars($firstName) ?></p>
+        <p><?= "Votre civilité : " . htmlspecialchars($gender) ?></p>
+        <p><?= "Votre âge : " . htmlspecialchars($age) ?></p>
+        <p><?= "Votre société: " . htmlspecialchars($society) ?></p>
  
     <?php } else {
         
