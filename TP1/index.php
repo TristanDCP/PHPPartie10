@@ -69,20 +69,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <?php
     if (isset($_POST['lastname']) && preg_match($lastNameRegex, $lastName) && preg_match($firstNameRegex, $firstName) &&  preg_match($dateRegex, $birthDate) && preg_match($lastNameRegex, $nationality) && preg_match($addressRegex, $adress) && ($filtermail == true) && preg_match($phoneRegex, $phoneNumber) && preg_match($degreeRegex, $degree) && preg_match($poleEmploiRegex, $poleEmploi) && preg_match($badgesRegex, $badges) && preg_match($urlRegex, $codecademyLinks) && isset($experience)) {
     ?>
-    <p><?= "Votre nom : " . $lastName ?></p>
-    <p><?= "Votre prénom : " . $firstName ?></p>
-    <p><?= "Votre date de naissance : " . $birthDate ?></p>
-    <p><?= "Votre nationalité : " . $nationality ?></p>
-    <p><?= "Votre adresse : " . $adress ?></p>
-    <p><?= "Votre adresse email : " .$email ?></p>
-    <p><?= "Votre numéro de téléphone : " . $phoneNumber ?></p>
-    <p><?= "Votre diplôme : " . $degree ?></p>
-    <p><?= "Votre numéro Pôle Emploi : " .  $poleEmploi ?></p>
-    <p><?= "Votre nombre de badges : " . $badges ?></p>
-    <p><?= "Votre lien codeacademy : " . $codecademyLinks ?></p>
-    <p><?= "Votre description de super héros : " . $superhero ?></p>
-    <p><?= "Votre hack personnel : " . $hack ?></p>
-    <p><?= "Votre expérience passée : " . $experience ?></p>
+    <p><?= "Votre nom : " . htmlspecialchars($lastName) ?></p>
+    <p><?= "Votre prénom : " . htmlspecialchars($firstName) ?></p>
+    <p><?= "Votre date de naissance : " . htmlspecialchars($birthDate) ?></p>
+    <p><?= "Votre nationalité : " . htmlspecialchars($nationality) ?></p>
+    <p><?= "Votre adresse : " . htmlspecialchars($adress )?></p>
+    <p><?= "Votre adresse email : " . htmlspecialchars($email) ?></p>
+    <p><?= "Votre numéro de téléphone : " . htmlspecialchars($phoneNumber) ?></p>
+    <p><?= "Votre diplôme : " . htmlspecialchars($degree) ?></p>
+    <p><?= "Votre numéro Pôle Emploi : " .  htmlspecialchars($poleEmploi) ?></p>
+    <p><?= "Votre nombre de badges : " . htmlspecialchars($badges) ?></p>
+    <p><?= "Votre lien codeacademy : " . htmlspecialchars($codecademyLinks) ?></p>
+    <p><?= "Votre description de super héros : " . htmlspecialchars($superhero) ?></p>
+    <p><?= "Votre hack personnel : " . htmlspecialchars($hack )?></p>
+    <p><?= "Votre expérience passée : " . htmlspecialchars($experience) ?></p>
     <?php } else {
         ?>
     <div class="container">
