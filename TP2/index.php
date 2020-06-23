@@ -1,7 +1,9 @@
 <?php
-$firstNameRegex = "/[a-zA-Zéèêëiîïôöüäç]{2,12}[-]?[a-zA-Zéèêëiîïôöüäç]{2,12}/";
-$lastNameRegex = "/[a-zA-Zéèêëiîïôöüäç ]{1,15}[- \"]{0,1}[a-zA-Zéèêëiîïôöüäç ]{0,18}[- \"]{0,1}[a-zA-Zéèêëiîïôöüäç ]{1,10}/";
-$ageRegex = '/[1-9]{1}+[0-9]{1}/';
+$genderRegex = '/Monsieur|Madame/';
+$firstNameRegex = '/[a-zA-Zéèêëiîïôöüäç]{2,12}[-]?[a-zA-Zéèêëiîïôöüäç]{2,12}/';
+$lastNameRegex = '/[a-zA-Zéèêëiîïôöüäç ]{1,15}[- \']{0,1}[a-zA-Zéèêëiîïôöüäç ]{0,18}[- \']{0,1}[a-zA-Zéèêëiîïôöüäç ]{1,10}/';
+$societyRegex = '/[a-zA-ZéèêëiîïôöüäçàÉÈÀÊÔÎÛÂÙ ]{1,15}[- \']?[a-zA-ZéèêëiîïôöüäçÉÈÀÊÔÎÛÂÙ ]{1,18}[- \']?[a-zA-ZéèêëiîïôöüäçÉÈÀÊÔÎÛÂÙ ]{0,18}[- \']?[a-zA-ZéèêëiîïôöüäçÉÈÀÊÔÎÛÂÙ ]{1,18}/';
+$ageRegex = '/[0-9]{1}+[0-9]{1}/';
 // VARIABLES
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $lastName = $_POST["lastname"];
@@ -19,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
-    <title>TP1 PHP</title>
+    <title>TP2 PHP</title>
 </head>
 
 <body>
@@ -51,17 +53,17 @@ A la validation, les données saisies devront aparaitre sous le formulaire. Atte
                 </div>
                 <!-- AGE -->
                 <div class="textfields">
-                    <label for="age">Age: </label><span class="errormessage"><?= isset($_POST['age']) ? (empty($_POST['age']) ? 'Veuillez remplir ce champ' : (preg_match($lastNameRegex, $age) == false ?  "Veuillez indiquer une nationalité valide" : "")) : "" ?></span>
+                    <label for="age">Age: </label><span class="errormessage"><?= isset($_POST['age']) ? (empty($_POST['age']) ? 'Veuillez remplir ce champ' : (preg_match($ageRegex, $age) == false ?  "Veuillez indiquer un age valide" : "")) : "" ?></span>
                     <input type="text" name="age" id="age" value="<?= isset($_POST['age']) ? $_POST['age'] : '' ?>" required>
                 </div>
             
                 <!-- CIVILITE -->
                 <div class="fields">
-                    <label for="gender">Civilité : </label><span class="errormessage"><?= isset($_POST['gender']) ? (empty($_POST['gender']) ? 'Veuillez remplir ce champ' : "") : "" ?></span>
+                    <label for="gender">Civilité : </label><span class="errormessage"><?= isset($_POST['gender']) ? (empty($_POST['gender']) ? 'Veuillez remplir ce champ' : (preg_match($genderRegex, $gender) == false ? "Veuillez indiquer un genre valide" : "")) : "" ?></span>
                     <select name="gender" id="gender"  required>
                         <option selected>--Indiquez votre civilité : --</option>
-                        <option value="1" <?= (isset($_POST['gender']) && $_POST['gender'] === '1') ? 'selected' : ''; ?>>Monsieur</option>
-                        <option value="2" <?= (isset($_POST['gender']) && $_POST['gender'] === '2') ? 'selected' : ''; ?>>Madame</option>
+                        <option value="Monsieur" <?= (isset($_POST['gender']) && $_POST['gender'] === 'Monsieur') ? 'selected' : ''; ?>>Monsieur</option>
+                        <option value="Madame" <?= (isset($_POST['gender']) && $_POST['gender'] === 'Madame') ? 'selected' : ''; ?>>Madame</option>
                     </select>
                 </div>
 
@@ -74,7 +76,7 @@ A la validation, les données saisies devront aparaitre sous le formulaire. Atte
         </div>
     </div>
     <?php
-    if (isset($_POST['lastname']) && preg_match($lastNameRegex, $lastName) && preg_match($firstNameRegex, $firstName) && preg_match($lastNameRegex, $gender) && preg_match($lastNameRegex, $society)) {
+    if (isset($lastName) && preg_match($lastNameRegex, $lastName) && preg_match($firstNameRegex, $firstName) && preg_match($ageRegex, $age) && preg_match($genderRegex, $gender) && preg_match($societyRegex, $society)){
     ?>
         <p><?= "Votre nom : " . $lastName ?></p>
         <p><?= "Votre prénom : " . $firstName ?></p>
@@ -84,7 +86,7 @@ A la validation, les données saisies devront aparaitre sous le formulaire. Atte
  
     <?php } else {
         
-        echo "";?>
+        echo "Remplissez les infos correctement";?>
     <?php
     }
     ?>
